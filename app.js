@@ -11,8 +11,8 @@ var s3 = new AWS.S3();
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-var aws_access_key_id = "AKIAI63CKNORC5CJT6IQ";
-var aws_secret_access_key = "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";
+var aws_access_key_id = "xxxxxxx";
+var aws_secret_access_key = "xxxxxx";
 
 // Import Admin SDK
 var admin = require("firebase-admin");

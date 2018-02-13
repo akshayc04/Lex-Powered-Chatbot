@@ -1,0 +1,31 @@
+body {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+}
+
+h1, h2, h3, a, p {
+    font-family: 'Lato', sans-serif !important;
+}
+
+.slider-description {
+    font-size: 18px;
+    color: #404040;
+}
+
+.tm-home-section-1 {
+    position: relative;
+    top: -50px;
+}
+
+.modal {
+    text-align: center;       /* Center the modal window. */
+}
+
+.modal-dialog {
+    width: auto;
+    margin: 30px auto;
+    display: inline-block;
+}

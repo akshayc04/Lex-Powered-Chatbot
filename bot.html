@@ -1,0 +1,234 @@
+<!-- <html>
+	<head> </head>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="914791893667-tfrl6o3iocqf8jfknuns16qcsg4trs9d.apps.googleusercontent.com">
+<meta name="google-signin-cookiepolicy" content="single_host_origin">
+<meta name="google-signin-scope" content="profile email">
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-messaging.js"></script>
+<script type="text/javascript" src="./js/index.js"></script>
+
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.157.0.min.js"></script>
+		<body>
+		<p> Starting SE Project </p>
+		<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+		<a href="#" onclick="signOut();">Sign out</a>
+
+	</body>
+</html> -->
+<html>
+
+<head>
+
+	<script type="text/javascript" src="public/js/jquery-1.11.2.min.js"></script>      		<!-- jQuery -->
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.41.0.min.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-messaging.js"></script>
+<script type="text/javascript" src="public/js/index.js"></script>
+<script type="text/javascript" src="public/js/jquery-1.11.2.min.js"></script> 
+<script type="text/javascript" src="public/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="public/css/bootstrap.min.css" rel="stylesheet">
+	<style language="text/css">
+		body{
+		height:100%;
+		overflow:hidden;
+		}
+		input#wisdom {
+			!padding: 4px;
+			font-size: 1em;
+			!width: 400px
+		}
+
+		input::placeholder {
+			color: #ccc;
+			font-style: italic;
+		}
+
+		p.userRequest {
+			margin: 4px;
+			padding: 4px 10px 4px 10px;
+			border-radius: 4px;
+			min-width: 50%;
+			max-width: 85%;
+			float: left;
+			background-color: #7d7;
+		}
+
+		p.lexResponse {
+			margin: 4px;
+			padding: 4px 10px 4px 10px;
+			border-radius: 4px;
+			text-align: right;
+			min-width: 50%;
+			max-width: 85%;
+			float: right;
+			background-color: #bbf;
+			font-style: italic;
+		}
+
+		p.lexError {
+			margin: 4px;
+			padding: 4px 10px 4px 10px;
+			border-radius: 4px;
+			text-align: right;
+			min-width: 50%;
+			max-width: 85%;
+			float: right;
+			background-color: #f77;
+		}
+	</style>
+	
+</head>
+
+<body>
+
+	
+	<!--<div id="conversation" style="width: 400px; height: 300px; border: 1px solid #ccc; background-color: #eee; padding: 4px; overflow: scroll"></div>-->
+	<!--<div class="form-group">
+		<textarea id="conversation" style="width: 400px; height: 300px;overflow: scroll" class="form-control" rows="5" id="comment"></textarea>
+	</div>-->
+	<div class="panel panel-primary" style="height: 100%; width: 100%; overflow:hidden;" >
+		<div class="panel-heading" style="height:50px; text-align: center" onclick="parent.get_chat(1);"><i class="fa fa-window-minimize" style="float:right;cursor: pointer"></i>Smart Bot</div>
+		<div class="panel-body" style="height:270px;"><div style="height:100%;overflow-y: scroll" id="conversation"></div></div>
+		<!--<div class="panel-footer" style="height:50px;"><form id="chatform" onsubmit="return pushChat();"><input type="text" id="wisdom" style="width:100%;" value="" placeholder="I need a hotel room" class="form-control">-->
+		<div class="panel-footer" style="height:50px;">
+		<form id="chatform" onsubmit="return pushChat();">
+		<input type="text" id="wisdom" style="width:100%;" value="" placeholder="Start by saying hi" class="form-control" />
+		<!--<input type="text" id="wisdom" size="80" value="" placeholder="I need a hotel room">-->
+		</form></div>
+		
+	</div>
+	
+	<script type="text/javascript">
+		
+		function getParameterByName(name, url) {
+		    if (!url) url = window.location.href;
+		    name = name.replace(/[\[\]]/g, "\\$&");
+		    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+		        results = regex.exec(url);
+		    if (!results) return null;
+		    if (!results[2]) return '';
+		    return decodeURIComponent(results[2].replace(/\+/g, " "));
+		}
+		// set the focus to the input box
+		document.getElementById("wisdom").focus();
+
+		// Initialize the Amazon Cognito credentials provider
+		AWS.config.region = 'us-east-1'; // Region
+		AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+			IdentityPoolId: 'us-east-1:996d7052-a4c5-4125-856b-208f24ee8605',
+		});
+
+		var lexruntime = new AWS.LexRuntime();
+		var lexUserId = 'chatbot-demo' + Date.now();
+		var sessionAttributes = {};
+		var uname='UnknownUser';
+		uname = parent.uid;
+		var nameUser = parent.name;
+		var emailUser = parent.email;
+		console.log("uname is");
+		console.log(uname);
+
+
+
+  
+		function pushChat() {
+
+			// if there is text to be sent...
+			var wisdomText = document.getElementById('wisdom');
+			if (wisdomText && wisdomText.value && wisdomText.value.trim().length > 0) {
+
+				// disable input to show we're sending it
+				var wisdom = wisdomText.value.trim();
+				wisdomText.value = '...';
+				wisdomText.locked = true;
+				//console.log("name set for sessionattr: " + profile.displayName);
+				sessionAttributes['name']= uname;
+                sessionAttributes['username'] = nameUser;
+                sessionAttributes['email'] = emailUser;
+                console.log(sessionAttributes.name);
+                console.log(sessionAttributes.email);
+                console.log(sessionAttributes.username);
+				// send it to the Lex runtime
+				var params = {
+					botAlias: '$LATEST',
+					botName: 'HotelReservation',
+					inputText: wisdom,
+					userId: lexUserId,
+					sessionAttributes: sessionAttributes
+				};
+				showRequest(wisdom);
+				lexruntime.postText(params, function(err, data) {
+					if (err) {
+						console.log(err, err.stack);
+						showError('Error:  ' + err.message + ' (see console for details)')
+					}
+					if (data) {
+						// capture the sessionAttributes for the next cycle
+						sessionAttributes = data.sessionAttributes;
+						// show response and/or error/dialog status
+						showResponse(data);
+					}
+					// re-enable input
+					wisdomText.value = '';
+					wisdomText.locked = false;
+				});
+			}
+			// we always cancel form submission
+			return false;
+		}
+
+		function showRequest(daText) {
+
+			var conversationDiv = document.getElementById('conversation');
+			var requestPara = document.createElement("P");
+			requestPara.className = 'userRequest';
+			requestPara.appendChild(document.createTextNode(daText));
+			conversationDiv.appendChild(requestPara);
+			conversationDiv.scrollTop = conversationDiv.scrollHeight;
+		}
+
+		function showError(daText) {
+
+			var conversationDiv = document.getElementById('conversation');
+			var errorPara = document.createElement("P");
+			errorPara.className = 'lexError';
+			errorPara.appendChild(document.createTextNode(daText));
+			conversationDiv.appendChild(errorPara);
+			conversationDiv.scrollTop = conversationDiv.scrollHeight;
+		}
+
+		function showResponse(lexResponse) {
+
+			var conversationDiv = document.getElementById('conversation');
+			var responsePara = document.createElement("P");
+			responsePara.className = 'lexResponse';
+			if (lexResponse.message) {
+				responsePara.appendChild(document.createTextNode(lexResponse.message));
+				responsePara.appendChild(document.createElement('br'));
+			}
+			if (lexResponse.dialogState === 'ReadyForFulfillment') {
+				responsePara.appendChild(document.createTextNode(
+					'Ready for fulfillment'));
+				// TODO:  show slot values
+			} else {
+				responsePara.appendChild(document.createTextNode(
+					'(' + lexResponse.dialogState + ')'));
+			}
+			conversationDiv.appendChild(responsePara);
+			conversationDiv.scrollTop = conversationDiv.scrollHeight;
+		}
+	</script>
+</body>
+
+</html>

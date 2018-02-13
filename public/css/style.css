@@ -1,0 +1,120 @@
+/*Inser all styles */
+
+body {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+}
+
+h1, h2, h3, a, p {
+    font-family: 'Lato', sans-serif !important;
+}
+
+.tm-home-section-1 {
+    position: relative;
+    top: -50px;
+}
+
+.container {
+    width: 80% !important;
+}
+
+.hotel-box-3 {
+    margin-top: 10px;
+}
+
+.hotel-box-4 {
+    margin-top: 10px;
+}
+
+.hotel-box-5 {
+    margin-top: 10px;
+}
+
+.hotel-box-6 {
+    margin-top: 10px;
+}
+
+iframe#bot-iframe {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+/* ALEXA CHATBOT STYLING */
+#widget-control-btn {
+}
+#voicePanel, #voiceControl {
+    padding: 5px;
+    text-align: center;
+    background-color: whitesmoke;
+}
+
+#voiceControl {
+    box-shadow: 0 2px 15px rgba(0,0,0,.1);
+    cursor: pointer;
+    color: white;
+    padding: 5px 15px 5px 5px;
+    background-color: #d43f3a;
+    border-radius: 25px;
+    display: block;
+    position: fixed;
+    bottom: 3px;
+    margin-left: 10px;
+    z-index: 200;
+    height: 52px;
+}
+#voiceControl img {
+    margin-right: -10px;
+}
+
+#voicePanel {
+    position: fixed;
+    padding: 20px;
+    bottom: 100px;
+    z-index: 500000;
+    display: none;
+    border-radius: 5px;
+}
+.white-circle {
+    cursor: pointer;
+    background-color: #fff;
+    box-shadow: 0 0 8px #d8dbe3;
+    border-radius: 100px;
+    height: 100px;
+    margin: 0 auto;
+    width: 100px;
+}
+
+.white-circle:hover {
+    box-shadow: 0 0 8px #007dbc;
+}
+
+.white-circle img {
+    position: relative;
+    top: 18px;
+}
+
+.audio-control {
+    right: 200px;
+    text-align: center;
+    background-color: whitesmoke;
+}
+canvas {
+    height: 50px;
+    width:90%;
+    margin: auto;
+    display: block;
+    z-index: -1;
+}
+#messageWindow {
+    height: 200px;
+    width: 300px;
+    overflow: auto;
+    padding: 10px;
+}
+
+#voiceBot {
+    width: 40px;
+}
